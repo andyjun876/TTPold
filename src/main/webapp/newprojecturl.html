@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+		<link type="text/css" rel="stylesheet" href="css/fontsawesome/css/font-awesome.css"/>
+		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+		<script src="js/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript" src="js/js/ttp-1.0.0.js"></script>
+		
+		<script type="text/javascript">
+			$(function(){
+				newprojecturl();
+				
+			});		
+		</script>
+</head>
+<body>
+<body>
+		<form name='apitest'>
+		
+		<div class="main_box new_order">
+			<h2><span></span>详情页</h2>
+			
+				<div class="">
+				<table  >
+				<tr>
+				<td width="1"><input type="button" value="返回" class="btn blue_btn" onclick='back()'></td>
+				<td width="1"><input type="button" value="确认" class="btn blue_btn" onclick='insert()'></td>
+				</tr>
+				</table>
+				</div>
+				
+			<div class="cont_box">
+				<!--订单备注-->
+				<table>
+				<tr>
+				<td valign="top">
+				<div class="norder_box">
+				<h2><span></span>项目名称</h2>
+				
+					<label class="f_left">编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+					<input type="text"  id='id' value="" readonly class="f_left search_input"/><br><br><br>
+					<label class="f_left">所在公司 ：</label>
+					<div id="thdiv">
+					</div> 
+				    <br><br><br>
+					<label class="f_left">项目名称 ：</label>
+					<input type="text"  id='name' value="system1.1_测试" class="f_left search_input"/><br><br><br>
+					<label class="f_left">地址类型 ：</label>
+					<div id="thdict">
+					</div> 
+					<br><br><br>
+					<label class="f_left">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+					<input type="text" id='url' value="https://www.baidu.com/" class="f_left search_input"/><br><br><br>
+					<label class="f_left">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</label>
+					<div id="thstatus">
+					</div> 
+					 <br><br><br>
+				</div>
+				</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+		</form>
+		<!--javascript include-->
+	
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/other.js"></script>	
+	</body>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+		<link type="text/css" rel="stylesheet" href="css/fontsawesome/css/font-awesome.css"/>
+		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+		<script src="js/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript">
+		
+		function GetUrlParam(paraName) {
+		　　　　var url = document.location.toString();
+		　　　　var arrObj = url.split("?");
+
+		　　　　if (arrObj.length > 1) {
+		　　　　　　var arrPara = arrObj[1].split("&");
+		　　　　　　var arr;
+
+		　　　　　　for (var i = 0; i < arrPara.length; i++) {
+		　　　　　　　　arr = arrPara[i].split("=");
+
+		　　　　　　　　if (arr != null && arr[0] == paraName) {
+		　　　　　　　　　　return arr[1];
+		　　　　　　　　}
+		　　　　　　}
+		　　　　　　return "";
+		　　　　}
+		　　　　else {
+		　　　　　　return "";
+		　　　　}
+		　　}
+		
+		function update(paramnum){
+			if(GetUrlParam('id')!=""){
+				var id = "id=" + GetUrlParam('id');
+				
+				$.ajax({
+		               type: "GET",
+		               url: "http://localhost:8080/TTP/servlet/ProjectUrlList",
+		               data: id,
+		               dateType: "json",
+		               success: function(data){	
+		            	    var strhtml;
+		           	   		var datajson = eval("(" + data + ")");
+		           	   		if(datajson.msg=="failure"){
+		           	   			alert("无"+ companryid + "的数据！");
+		           	   			window.location.href = "projecturl.html";
+		           	   		}else{
+			           	   		var datadata = datajson.data;
+			           	   		if (datajson.data.length==1){
+			           	   			document.getElementById("id").value = datadata[0].id;
+			           	   			document.getElementById("company").value = datadata[0].company_id;
+			           	   			document.getElementById("name").value = datadata[0].name;
+			           	   			document.getElementById("type").value = datadata[0].type;
+			           	   			document.getElementById("url").value = datadata[0].url;
+			           	   			document.getElementById("status").value = datadata[0].status;
+			           	   			
+			           	   		}
+			           	   		
+			                  }
+		           	   		}
+		            	});
+			}
+			
+		}
+		
+		
+		function dictionary(){
+			id="id="+document.getElementById("id").value;
+			var url = document.location.toString();
+			var paramnum = 0;
+			if(url.indexOf('?')!=-1){
+				paramnum = 1;
+			}
+			$.ajax({
+	               type: "GET",
+	               url: "http://localhost:8080/TTP/servlet/GetDictionary",
+	               data: id,
+	               dateType: "json",
+	               success: function(data){	
+	            	   	
+	            	    var strhtml;
+	           	   		var datajson = eval("(" + data + ")");
+	           	   		var datadata = datajson.data;
+	           	   		var num = 0;
+	           	   		strhtml = "<select name='type' id='type' class='f_left search_input'> ";
+	           	   		strhtmlstatus = "<select name='status' id='status' class='f_left search_input'> ";
+	           	   		for(i=0;i<datajson.data.length;i++){
+	           	   			
+	           	   			if(datadata[i].dict_name=='type'){
+	           	   				num = num + 1;
+		           	   			strhtml = strhtml + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						
+	           	   			}else if(datadata[i].dict_name=='status'){
+	           	   				num = num + 1;
+	           	   				strhtmlstatus = strhtmlstatus + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						
+	           	   			}
+	           	   			
+	           	   			
+	           	   		}
+		           	   	if (num==0){
+	           	   			strhtml = strhtml + "<option value='0'>未配置</option>"	
+	           	   			strhtmlstatus = strhtmlstatus + "<option value='0'>未配置</option>"	
+           	   			}
+	           	   		strhtml = strhtml + "</select> ";
+	           	   		strhtmlstatus = strhtmlstatus + "</select> ";
+	           	   		//alert(document.getElementById("selectAge").value);
+	           	   		$("#thdict").html(strhtml);
+	           	   		$("#thstatus").html(strhtmlstatus);
+	                  }
+	            	});
+					if(document.getElementById("id").value==""&&paramnum==1){
+						update(paramnum);
+					}
+				}
+		
+			$(function(){
+				$.ajax({
+		               type: "GET",
+		               url: "http://localhost:8080/TTP/servlet/GetCompanyList",
+		               data: "uid=fasdfasdfasdf",
+		               dateType: "json",
+		               success: function(data){	
+		            	    var strhtml;
+		           	   		var datajson = eval("(" + data + ")");
+		           	   		var datadata = datajson.data;
+		           	   		strhtml = "<select name='company' id='company' class='f_left search_input' onchange='dictionary()'> ";
+		           	   		for(i=0;i<datajson.data.length;i++){
+		           	   			strhtml = strhtml + "<option value='" + datadata[i].id + "'>" + datadata[i].company_name + "</option>"		           	   						
+		           	   		}
+		           	   		
+		           	   		strhtml = strhtml + "</select> ";
+		           	   		//alert(document.getElementById("selectAge").value);
+		           	   		$("#thdiv").html(strhtml);
+		           	   		
+		           	   		dictionary();
+		           	   		
+		                  }
+		            	});
+	
+			});
+			
+			function insert(){
+				
+				id = document.getElementById("id").value;
+				companyid = document.getElementById("company").value;
+				name = document.getElementById("name").value;
+				type = document.getElementById("type").value;
+				url = document.getElementById("url").value;
+				status = document.getElementById("status").value;
+				
+				var str = "update=0&company_id=" + companyid + "&" +
+				"type=" + type + "&" +
+				"name=" + name + "&" +
+				"url=" + url + "&" +
+				"status=" + status;
+				
+				if (id==""){				
+					if(companyid==""&&name==""&&type==""&&url==""&&status==""){
+						alert("不能为空");
+					}else{
+						
+						$.ajax({
+				               type: "GET",
+				               url: "http://localhost:8080/TTP/servlet/ProjectUrlInsert",
+				               data: str,
+				               dateType: "json",
+				               success: function(data){	
+				            	    var strhtml;
+				           	   		var datajson = eval("(" + data + ")");
+				           	   		
+					           	   	if(datajson.msg=="failure"){
+				           	   			alert("参数错误！");
+				           	   		}else{
+				           	   			alert("添加成功");
+				           	   			window.location.href = "projecturl.html";
+				           	   		}
+				           	   		
+				           	   		dictionary();
+				           	   		
+				                  }
+				            	});
+					}
+				}else{
+					if(companyid==""&&name==""&&type==""&&url==""&&status==""){
+						alert("不能为空");
+					}else{
+						str = "update=1&id=" + id + "&"+ str;
+						$.ajax({
+				               type: "GET",
+				               url: "http://localhost:8080/TTP/servlet/ProjectUrlInsert",
+				               data: str,
+				               dateType: "json",
+				               success: function(data){	
+				            	    var strhtml;
+				           	   		var datajson = eval("(" + data + ")");
+				           	   		
+					           	   	if(datajson.msg=="failure"){
+				           	   			alert("参数错误！");
+				           	   		}else{
+				           	   			alert("更新成功");
+				           	   			window.location.href = "projecturl.html";
+				           	   		}
+				           	   		
+				           	   		dictionary();
+				           	   		
+				                  }
+				            	});
+					}
+				}
+			}
+		</script>
+</head>
+<body>
+<body>
+		<form name='apitest'>
+		
+		<div class="main_box new_order">
+			<h2><span></span>详情页</h2>
+			
+				<div class="">
+				<table  >
+				<tr>
+				<td width="1"><input type="button" value="确认" class="btn blue_btn" onclick='insert()'></td>
+				</tr>
+				</table>
+				</div>
+				
+			<div class="cont_box">
+				<!--订单备注-->
+				<table>
+				<tr>
+				<td valign="top">
+				<div class="norder_box">
+				<h2><span></span>项目名称</h2>
+				
+					<label class="f_left">编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+					<input type="text"  id='id' value="" readonly class="f_left search_input"/><br><br><br>
+					<label class="f_left">所在公司 ：</label>
+					<div id="thdiv">
+					</div> 
+				    <br><br><br>
+					<label class="f_left">项目名称 ：</label>
+					<input type="text"  id='name' value="system1.1_测试" class="f_left search_input"/><br><br><br>
+					<label class="f_left">地址类型 ：</label>
+					<div id="thdict">
+					</div> 
+					<br><br><br>
+					<label class="f_left">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+					<input type="text" id='url' value="https://www.baidu.com/" class="f_left search_input"/><br><br><br>
+					<label class="f_left">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</label>
+					<div id="thstatus">
+					</div> 
+					 <br><br><br>
+				</div>
+				</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+		</form>
+		<!--javascript include-->
+	
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/other.js"></script>	
+	</body>
+</body>
+</html>

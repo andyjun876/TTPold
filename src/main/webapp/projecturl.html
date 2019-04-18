@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>案例列表</title>
+		<link type="text/css" rel="stylesheet" href="css/fontsawesome/css/font-awesome.css"/>
+		<link type="text/css" rel="stylesheet" href="css/datepicker.css"/>
+		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+		<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript" src="js/js/ttp-1.0.0.js"></script>
+		<script type="text/javascript">		
+			$(function(){	
+					js_list('0');
+			 	 });
+		</script>
+</head>
+	<body>
+		<div class="main_box">
+		
+			<h2><span></span>案例列表</h2>
+			<div class="cont_box">
+			<form>
+			<table id="sel" border='0' cellspacing="0" cellpadding="0" class="table">
+			<thead>
+				<tr><th><p>所属：</p><div id="thcompanysel"></div></th>
+				<th><p>状态：</p><div id="thstatusel"></div></th></tr>
+			</thead>
+			</table>
+			</form>
+			<form name="myform" action="" method="post" enctype="multipart/form-data" accept-charset=utf-8>
+				<table id="tb" border='0' cellspacing="0" cellpadding="0" class="table">
+				
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>所属</th>
+						<th>项目名称</th>
+						<th>地址类型</th>
+						<th>地址</th>
+						<th>状态</th>
+						<th width="200">操作
+						<a href='javascript:void(0);' onclick='js_update(0)' class='table_btn table_info detail_btn'>
+						<i class='fa fa-plus-circle'></i><span> 新增</span></a>
+						</th>
+					</tr>
+				</thead>
+				<thead id='thdiv'>
+				</thead>
+
+			</table>
+			</form>
+		</div>
+		</div>
+		<!--javascript include-->
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/other.js"></script>
+	</body>
+</html>

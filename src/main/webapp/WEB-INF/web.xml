@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>Archetype Created Web Application</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>ProjectUrlList</servlet-name>
+    <servlet-class>com.cn.api.ProjectUrlList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjectUrlList</servlet-name>
+    <url-pattern>/servlet/ProjectUrlList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ProjectUrlInsert</servlet-name>
+    <servlet-class>com.cn.api.ProjectUrlInsert</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProjectUrlInsert</servlet-name>
+    <url-pattern>/servlet/ProjectUrlInsert</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetCompanyList</servlet-name>
+    <servlet-class>com.cn.api.GetCompanyList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetCompanyList</servlet-name>
+    <url-pattern>/servlet/GetCompanyList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetDictionary</servlet-name>
+    <servlet-class>com.cn.api.GetDictionary</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetDictionary</servlet-name>
+    <url-pattern>/servlet/GetDictionary</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>TestCaseList</servlet-name>
+    <servlet-class>com.cn.api.TestCaseList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestCaseList</servlet-name>
+    <url-pattern>/servlet/TestCaseList</url-pattern>
+  </servlet-mapping>
+</web-app>
