@@ -24,7 +24,7 @@ function js_list(change){
 	
 	$.ajax({
            type: "GET",
-           url: "http://localhost:8080/TTP/servlet/ProjectUrlList",
+           url: "http://172.16.30.12:8080/TTP/servlet/ProjectUrlList",
            data: "uid=fasdfasdfasdf",
            dateType: "json",
            success: function(data){	
@@ -85,7 +85,7 @@ function js_update(id){
 	function js_company(){
 		$.ajax({
            type: "GET",
-           url: "http://localhost:8080/TTP/servlet/GetCompanyList",
+           url: "http://172.16.30.12:8080/TTP/servlet/GetCompanyList",
            data: "uid=fasdfasdfasdf",
            dateType: "json",
            success: function(data){	
@@ -124,7 +124,7 @@ function js_update(id){
 		var param = "dictname=" + dictname
 		$.ajax({
            type: "GET",
-           url: "http://localhost:8080/TTP/servlet/GetDictionary",
+           url: "http://172.16.30.12:8080/TTP/servlet/GetDictionary",
            data: param,
            dateType: "json",
            success: function(data){	
@@ -181,7 +181,7 @@ function js_update(id){
 			
 			$.ajax({
 	               type: "GET",
-	               url: "http://localhost:8080/TTP/servlet/ProjectUrlList",
+	               url: "http://172.16.30.12:8080/TTP/servlet/ProjectUrlList",
 	               data: id,
 	               dateType: "json",
 	               success: function(data){	
@@ -219,7 +219,7 @@ function js_update(id){
 		}
 		$.ajax({
                type: "GET",
-               url: "http://localhost:8080/TTP/servlet/GetDictionary",
+               url: "http://172.16.30.12:8080/TTP/servlet/GetDictionary",
                data: id,
                dateType: "json",
                success: function(data){	
@@ -280,7 +280,7 @@ function js_update(id){
 				
 				$.ajax({
 		               type: "GET",
-		               url: "http://localhost:8080/TTP/servlet/ProjectUrlInsert",
+		               url: "http://172.16.30.12:8080/TTP/servlet/ProjectUrlInsert",
 		               data: str,
 		               dateType: "json",
 		               success: function(data){	
@@ -304,7 +304,7 @@ function js_update(id){
 				str = "update=1&id=" + id + "&"+ str;
 				$.ajax({
 		               type: "GET",
-		               url: "http://localhost:8080/TTP/servlet/ProjectUrlInsert",
+		               url: "http://172.16.30.12:8080/TTP/servlet/ProjectUrlInsert",
 		               data: str,
 		               dateType: "json",
 		               success: function(data){	
@@ -335,7 +335,7 @@ function js_update(id){
 	function newprojecturl(){
 		$.ajax({
             type: "GET",
-            url: "http://localhost:8080/TTP/servlet/GetCompanyList",
+            url: "http://172.16.30.12:8080/TTP/servlet/GetCompanyList",
             data: "uid=fasdfasdfasdf",
             dateType: "json",
             success: function(data){	

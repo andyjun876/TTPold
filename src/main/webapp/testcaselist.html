@@ -11,7 +11,55 @@
 		<script type="text/javascript" src="js/js/ttp-1.0.0.js"></script>
 		
 		<script type="text/javascript">
-		        
+	        $(function(){	
+			js_list('0');
+		 	 });
+	    	
+	    function js_list(change){
+	    	var status;
+	    	
+	    	$.ajax({
+	               type: "GET",
+	               url: "http://172.16.30.12:8080/TTP/servlet/ProjectUrlList",
+	               data: "uid=fasdfasdfasdf",
+	               dateType: "json",
+	               success: function(data){	
+	            	   	status = 1;
+	            	   	autoflag = 1;
+	            	   	if(change!='0'){
+	                	   	//var company = document.getElementById("companysel").value;
+	                	   	//var status  = document.getElementById("statusel").value;
+	            	   	}
+	            	   	
+	            	    var strhtml="";
+	           	   		var datajson = eval("(" + data + ")");  
+	           	   		if(datajson.msg!="failure"){	           	   		
+	               	   		var datadata = datajson.data;
+	               	   		for(i=0;i<datajson.data.length;i++){
+	               	   			if(status=='0'||datadata[i].status==status){
+	               	   				if(autoflag=='0'||datadata[i].company_id==autoflag){	
+	    								strhtml = strhtml + "<tr id=" +datadata[i].id+ "><td>"+
+	    								datadata[i].id+ "</td><td>" +
+	    								datadata[i].company_name+"</td><td>"+
+	    								datadata[i].name+"</td><td>"+
+	    								datadata[i].dictdata_value+"</td><td>"+
+	    								datadata[i].url+"</td><td>"+
+	    								datadata[i].statusvalue+"</td><td>"+
+	    								"<a href='javascript:void(0);' onclick=\"js_click('"+datadata[i].url+"')\" class='table_btn table_edit edit_btn'><i class='fa fa-internet-explorer'></i>"+
+	    								"<span> 跳转</span></a><a href='javascript:void(0);' onclick=\"js_update('"+datadata[i].id+"')\" class='table_btn table_edit edit_btn'><i class='fa fa-refresh'></i>"+
+	    								"<span> 更新</span></a></td></tr>";   
+	               	   				}
+	               	   			}
+	               	   		}
+	               	   		$("#thdiv").html(strhtml);
+	           	   		}
+	           	   		if(change=='0'){
+	               	   		js_company();
+	               	   		js_dict("status");
+	               	   	}
+	                  }
+	            	});
+	    } 
 		</script>
 	</head>
 		<body>
@@ -23,6 +71,8 @@
 				<thead>
 					<tr>
 						<th>编号</th>
+						<th>模块</th>
+						<th>模块class</th>
 						<th>请求方式</th>
 						<th>接口地址</th>
 						<th>前置接口</th>
@@ -30,10 +80,8 @@
 						<th width="200">验证参数</th>
 						<th width="200">验证SQL</th>
 						<th>状态</th>
-						<th width="200">操作<a onclick='js_listexe(0)' class="table_btn table_edit edit_btn">
-				<i class="fa fa-edit"></i>
-				<span>批量执行</span>
-			</a></th>
+						<th>批量执行</th>
+						<th width="200">操作</th>
 					</tr>
 				</thead>
 				<tbody>
