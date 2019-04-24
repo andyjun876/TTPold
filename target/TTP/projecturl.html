@@ -7,141 +7,26 @@
 		<link type="text/css" rel="stylesheet" href="css/datepicker.css"/>
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 		<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
-		
-		<script type="text/javascript">
-		
-			$(function(){
-				js_list('0');
+		<script type="text/javascript" src="js/js/ttp-1.0.0.js"></script>
+		<script type="text/javascript">		
+			$(function(){	
+					js_list('0');
 			 	 });
-		 	
-			function js_list(change){
-				var status;
-				
-				$.ajax({
-		               type: "GET",
-		               url: "http://localhost:8080/TTP/servlet/ProjectUrlList",
-		               data: "uid=fasdfasdfasdf",
-		               dateType: "json",
-		               success: function(data){	
-		            	   	status = 1;
-		            	   	company = 0;
-		            	   	if(change!='0'){
-			            	   	var company = document.getElementById("companysel").value;
-			            	   	var status  = document.getElementById("statusel").value;
-		            	   	}
-		            	   	
-		            	    var strhtml="";
-		           	   		var datajson = eval("(" + data + ")");  
-		           	   		if(datajson.msg!="failure"){	           	   		
-			           	   		var datadata = datajson.data;
-			           	   		for(i=0;i<datajson.data.length;i++){
-			           	   			if(status=='0'||datadata[i].status==status){
-			           	   				if(company=='0'||datadata[i].company_id==company){	
-											strhtml = strhtml + "<tr id=" +datadata[i].id+ "><td>"+
-											datadata[i].id+ "</td><td>" +
-											datadata[i].company_name+"</td><td>"+
-											datadata[i].name+"</td><td>"+
-											datadata[i].dictdata_value+"</td><td>"+
-											datadata[i].url+"</td><td>"+
-											datadata[i].statusvalue+"</td><td>"+
-											"<a href='javascript:void(0);' onclick=\"js_click('"+datadata[i].url+"')\" class='table_btn table_edit edit_btn'><i class='fa fa-internet-explorer'></i>"+
-											"<span> 跳转</span></a><a href='javascript:void(0);' onclick=\"js_update('"+datadata[i].id+"')\" class='table_btn table_edit edit_btn'><i class='fa fa-refresh'></i>"+
-											"<span> 更新</span></a></td></tr>";   
-			           	   				}
-			           	   			}
-			           	   		}
-			           	   		$("#thdiv").html(strhtml);
-		           	   		}
-		           	   		if(change=='0'){
-			           	   		js_company();
-			           	   		js_dict("status")
-			           	   	}
-		                  }
-		            	});
-			} 
-		 		  
-			function js_click(url){
-		 			 window.open(url);  
-		 		  }   
-		 		  
-			function js_update(id){
-		 			  if(id==0){
-		 				 url = "newprojecturl.html";
-		 			  }else{
-			 			  url = "newprojecturl.html" + "?id=" + id;
-
-		 			  }
-         	   		window.location.href = url;
-
-		 		  }
-		 	function js_company(){
-		 		$.ajax({
-		               type: "GET",
-		               url: "http://localhost:8080/TTP/servlet/GetCompanyList",
-		               data: "uid=fasdfasdfasdf",
-		               dateType: "json",
-		               success: function(data){	
-		            	    var strhtml;
-		           	   		var datajson = eval("(" + data + ")");
-		           	   		var datadata = datajson.data;
-		           	   		strhtml = "<select name='companysel' id='companysel' class='f_left search_input' onchange='js_list(1)'> ";
-		           	   		strhtml = strhtml + "<option value='0' selected='selected'>全部</option>"
-		           	   		for(i=0;i<datajson.data.length;i++){
-		           	   			strhtml = strhtml + "<option value='" + datadata[i].id + "'>" + datadata[i].company_name + "</option>"		           	   						
-		           	   		}
-		           	   		
-		           	   		strhtml = strhtml + "</select> ";
-		           	   		//alert(document.getElementById("selectAge").value);
-		           	   		$("#thcompanysel").html(strhtml);
-		           	   				           	   		
-		                  }
-		            	});
-		 	}
-		 	
-		 	function js_dict(dictname){
-		 		var param = "dictname=" + dictname
-		 		$.ajax({
-		               type: "GET",
-		               url: "http://localhost:8080/TTP/servlet/GetDictionary",
-		               data: param,
-		               dateType: "json",
-		               success: function(data){	
-		            	   	
-		            	    var strhtml;
-		           	   		var datajson = eval("(" + data + ")");
-		           	   		strhtml = "<select name='statusel' id='statusel' class='f_left search_input' onchange='js_list(1)'> ";
-		           	   		strhtml = strhtml + "<option value='0' >全部</option>"
-		           	   		if(datajson.msg!="failure"){
-			           	   		var datadata = datajson.data;
-			           	   		for(i=0;i<datajson.data.length;i++){
-			           	   			if(datadata[i].dict_value==1){
-					           	   		strhtml = strhtml + "<option value='" + datadata[i].dict_value + "' selected='selected'>" + datadata[i].dictdata_value + "</option>"		           	   							
-			           	   			}else {
-					           	   		strhtml = strhtml + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   							
-			           	   			}
-			           	   		}
-			           	   		//alert(document.getElementById("selectAge").value);
-		           	   		}else{
-		           	   			strhtml = strhtml + "<option value='0'>未配置</option>"	
-		           	   		}
-		           	   	strhtml = strhtml + "</select> ";
-		           	   		$("#thstatusel").html(strhtml);
-		                  }
-		            	});
-		 	}
-</script>
+		</script>
 </head>
 	<body>
 		<div class="main_box">
+		
 			<h2><span></span>案例列表</h2>
 			<div class="cont_box">
+			<form>
 			<table id="sel" border='0' cellspacing="0" cellpadding="0" class="table">
 			<thead>
 				<tr><th><p>所属：</p><div id="thcompanysel"></div></th>
 				<th><p>状态：</p><div id="thstatusel"></div></th></tr>
 			</thead>
 			</table>
-			
+			</form>
 			<form name="myform" action="" method="post" enctype="multipart/form-data" accept-charset=utf-8>
 				<table id="tb" border='0' cellspacing="0" cellpadding="0" class="table">
 				
@@ -155,7 +40,7 @@
 						<th>状态</th>
 						<th width="200">操作
 						<a href='javascript:void(0);' onclick='js_update(0)' class='table_btn table_info detail_btn'>
-						<i class='fa fa-plus-circle'></i><span>新增</span></a>
+						<i class='fa fa-plus-circle'></i><span> 新增</span></a>
 						</th>
 					</tr>
 				</thead>
@@ -171,6 +56,5 @@
 		<script src="js/bootstrap-datepicker.js"></script>
 		<script src="js/jquery.validate.min.js"></script>
 		<script src="js/other.js"></script>
-
 	</body>
 </html>

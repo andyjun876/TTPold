@@ -20,7 +20,7 @@
 			</li>
 			<li>
 				<i class="fa fa-cogs font_lager"></i>
-				<p data-id="exe">执行管理</p>
+				<p data-id="exe">用例管理</p>
 			</li>
 			<li>
 				<i class="fa fa-cab font_lager"></i>
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 	<ul class="login_msg">
-		<li title="TestToolsPlatform">TestToolsPlatform</li>
+		<li title="TestToolsPlatform">TestToolsPlatform</li>		
 		<!-- <li><a href="javascript:void(0);">退出</a></li> -->
 	</ul>
 </div>
@@ -77,9 +77,13 @@
 
 		<li>
 			<i class="menu_icon fa fa-file-text-o"></i>
-			<a href="javascript:void(0);" data-id="exe" data-href="testcaselist.jsp">执行列表</a>
+			<a href="javascript:void(0);" data-id="exe" data-href="testcaselist.html">用例列表</a>
 		</li>
-
+		<li>
+			<i class="menu_icon fa fa-file-text-o"></i>
+			<a href="javascript:void(0);" data-id="exe" data-href="testcase.html">更新用例</a>
+		</li>
+		
 		<li>
 			<i class="menu_icon fa fa-file-text-o"></i>
 			<a href="javascript:void(0);" data-id="api" data-href="">API调用</a>
@@ -111,7 +115,7 @@
 	});
 	jQuery("body").jrdek({Mtop:".header",Mleft:".main_left",Mright:".main_right",foldCell:".main_left h2"});
 	$(".logo").click(function(){
-		$("iframe[name='cont_box']").prop("src","Hello.html");
+		$("iframe[name='cont_box']").prop("src","projecturl.html");
 	});
 </script>
 </body>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>详情</title>
+		<link type="text/css" rel="stylesheet" href="css/fontsawesome/css/font-awesome.css"/>
+		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+		<script src="js/jquery-2.2.1.min.js"></script>
+		<script type="text/javascript" src="js/js/ttp-1.0.0.js"></script>
+		
+		<!-- 引入java对象转成的js ，DwrHello就是类的名字-->
+		<script>
+			$(function(){
+				testcase();
+			});	
+			
+			function testcase(){
+				$.ajax({
+		            type: "GET",
+		            url: "http://172.16.30.12:8080/TTP/servlet/GetModule",
+		            data: "uid=fasdfasdfasdf",
+		            dateType: "json",
+		            success: function(data){	
+		        	   		var datajson = eval("(" + data + ")");
+		        	   		var datadata = datajson.data;
+		        	   		thmodule = "<select name='module' id='module' class='f_left search_input' style='width:200px' onchange='change()'> ";
+		        	   		thclassurl = "<select name='classurl' id='classurl' class='f_left search_input' disabled > ";
+		        	   		thip = "<select name='ip' id='ip' class='f_left search_input' disabled > ";
+		        	   		thtype = "<select name='type' id='type' class='f_left search_input' disabled > ";
+
+		        	   		for(i=0;i<datajson.data.length;i++){
+		        	   			thmodule = thmodule + "<option value='" + datadata[i].id + "'>" + datadata[i].dictdata_value +"-"+ datadata[i].module + "</option>"
+		        	   			thclassurl = thclassurl + "<option value='" + datadata[i].id + "'>" + datadata[i].classurl + "</option>"		           	   						
+		        	   			thip = thip + "<option value='" + datadata[i].id + "'>" + datadata[i].ip+ datadata[i].path+ "</option>"		           	   						
+		        	   			thtype = thtype + "<option value='" + datadata[i].id + "'>" + datadata[i].type + "</option>"		           	   						
+
+		        	   		}
+		        	   		
+		        	   		thmodule = thmodule + "</select> ";
+		        	   		thclassurl = thclassurl + "</select> ";
+		        	   		thip = thip + "</select> ";
+		        	   		thtype = thtype + "</select> ";
+
+		        	   		//alert(document.getElementById("selectAge").value);
+		        	   		$("#thmodule").html(thmodule);
+		        	   		$("#thclassurl").html(thclassurl);
+		        	   		$("#thip").html(thip);
+		        	   		$("#thtype").html(thtype);
+		        	   		
+		               }
+		         	});
+				dict();
+				testcaseid();
+				
+			}
+			
+			function dict(){
+				$.ajax({
+		               type: "GET",
+		               url: "http://172.16.30.12:8080/TTP/servlet/GetDictionary",
+		               data: "id=1",
+		               dateType: "json",
+		               success: function(data){	
+		            	   	
+		            	    var strhtml;
+		           	   		var datajson = eval("(" + data + ")");
+		           	   		var datadata = datajson.data;
+		           	   		var num = 0;
+		           	   		strstatis = "<select name='statis' id='statis' class='f_left search_input'> ";
+		           	   		strpexe = "<select name='pexe' id='pexe' class='f_left search_input'> ";
+		           	   		for(i=0;i<datajson.data.length;i++){
+		           	   			
+		           	   			if(datadata[i].dict_name=='auto_flag'){
+		           	   				num = num + 1;
+		           	   				strpexe = strpexe + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						
+		           	   			}else if(datadata[i].dict_name=='status'){
+		           	   				num = num + 1;
+		           	   				strstatis = strstatis + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						
+		           	   			}
+		           	   			
+		           	   			
+		           	   		}
+			           	   	if (num==0){
+			           	   		strpexe = strpexe + "<option value='0'>未配置</option>"	
+			           	 		strstatis = strstatis + "<option value='0'>未配置</option>"	
+		       	   			}
+			           	 	strpexe = strpexe + "</select> ";
+			           		strstatis = strstatis + "</select> ";
+		           	   		//alert(document.getElementById("selectAge").value);
+		           	   		$("#thpexe").html(strpexe);
+		           	   		$("#thstatis").html(strstatis);
+		                  }
+		            	});
+
+			}
+			
+			function testcaseid(){
+				
+				$.ajax({
+		               type: "GET",
+		               url: "http://172.16.30.12:8080/TTP/servlet/TestCaseList",
+		               data: "uid=fasdfasdfasdf",
+		               dateType: "json",
+		               success: function(data){	
+		            	   	status = 1;
+		            	   	autoflag = 1;
+		            	   	
+		            	    var strhtml="";
+		           	   		var datajson = eval("(" + data + ")");  
+		           	   		if(datajson.msg!="failure"){	           	   		
+		               	   		var datadata = datajson.data;
+		               	   		strhtml = "<select name='prepose' id='prepose' class='f_left search_input'> ";
+		               	   		strhtml = strhtml + "<option value='0'>无</option>";
+		               	   		for(i=0;i<datajson.data.length;i++){
+		               	   					
+			               	   		if(GetUrlParam('id')!=""&&GetUrlParam('id')==datadata[i].id){
+			               	   			strhtml = strhtml;
+			               	   		}else{
+	               	   					strhtml = strhtml + "<option value='" + datadata[i].id + "'>" + datadata[i].id +"-"+datadata[i].environment +"-"+ datadata[i].module+ "</option>"		           	   									
+			               	   		}
+		               	   		}
+		               	   		$("#thprepose").html(strhtml);
+		           	   		}
+
+		                  }
+		            	});
+				setTimeout("caselist()",500);
+				//caselist();
+			}
+			
+			function change(){
+				id = document.getElementById("module").value;
+				document.getElementById("classurl").value=id;
+				document.getElementById("ip").value=id;
+				document.getElementById("type").value=id;
+			}
+			
+			function caselist(){
+				if(GetUrlParam('id')!=""){
+					id = "id=" + GetUrlParam('id');
+					$.ajax({
+			               type: "GET",
+			               url: "http://172.16.30.12:8080/TTP/servlet/TestCaseList",
+			               data: id,
+			               dateType: "json",
+			               success: function(data){	
+			            	   	status = 1;
+			            	   	autoflag = 1;
+			            	   	
+			            	    var strhtml="";
+			           	   		var datajson = eval("(" + data + ")");  
+			           	   		if(datajson.msg!="failure"){	           	   		
+			               	   		var datadata = datajson.data;
+				               	   	if (datajson.data.length==1){
+				           	   			document.getElementById("id").value = datadata[0].id;
+				           	   			document.getElementById("module").value = datadata[0].module_id;
+				           	   			document.getElementById("params").value = datadata[0].parameter;
+				           	   			document.getElementById("expectedresult").value = datadata[0].expectedresult;
+				           	   			document.getElementById("expectedsql").value = datadata[0].expectedsql;
+				           	   			document.getElementById("statis").value = datadata[0].status;
+					           	   		document.getElementById("prepose").value = datadata[0].preposeid;
+					           	   		if(datadata[0].preposeid!='0'){
+					           	   			document.getElementById("prepose_param").value = datadata[0].prepose_param;
+					           	   		}
+				           	   			document.getElementById("pexe").value = datadata[0].auto_flag;
+
+				           	   		}	
+			           	   		}
+
+			                  }
+			            	});
+       	   		}else{
+       	   			
+       	   		}
+			}
+			
+			function back(){
+				if(GetUrlParam('status')!=""&&GetUrlParam('huan')!=""&&GetUrlParam('pexe')!=""&&GetUrlParam('module')!=""){
+					window.location.href = "testcaselist.html?back=1&status=" + GetUrlParam('status')
+					  + "&huan=" + GetUrlParam('huan')
+					  + "&pexe=" + GetUrlParam('pexe')
+					  + "&module=" + GetUrlParam('module');
+				}else{
+					window.location.href = "testcaselist.html";
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<form name='apitest'>
+		
+		<div class="main_box new_order">
+			<h2><span></span>详情页</h2>
+			
+				<div class="">
+				<table  >
+				<tr>
+				<td width="1"><input type="button" value="返回" class="btn blue_btn" onclick='back()'></td>
+				</tr>
+				</table>
+				</div>
+				
+			<div class="cont_box">
+				<!--订单备注-->
+				<table>
+				<tr>
+				<td valign="top">
+				<div class="norder_box">
+				<h2><span></span>请求</h2>
+					<label class="f_left">编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：</label>
+					<input type="text"  id='id' value="" readonly class="f_left search_input"/><br><br><br>
+					<label class="f_left">模块&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：</label>
+					<div id="thmodule">
+					</div> <br><br><br>
+					<label class="f_left">请求参数 ：</label>
+					<input type="text" id='params' value="uid=4&uid=4" class="f_left search_input"/><br><br><br>
+					<label class="f_left">预期结果 ：</label>
+					<input type="text"  id='expectedresult' value="" class="f_left search_input"/><br><br><br>
+					<label class="f_left">验证sql&nbsp;&nbsp;&nbsp;：</label>
+					<input type="text" id='expectedsql' value="" class="f_left search_input"/><br><br><br>
+					<label class="f_left">状态&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ：</label>
+					<div id="thstatis">
+					</div> <br><br><br>
+				</div>
+				</td>
+				<td>
+					<div class="norder_box">
+					<h2>&nbsp;&nbsp;&nbsp;</h2>
+					
+					<label class="f_left">模块class ：</label>
+					<div id="thclassurl">
+					</div><br><br><br>
+					<label class="f_left">服务器IP ：</label>
+					<div id="thip">
+					</div> <br><br><br>
+					<label class="f_left">调用方式 ：</label>
+					<div id="thtype">
+					</div><br><br><br>
+					<label class="f_left">前置编号 ：</label>
+					<div id="thprepose">
+					</div> <br><br><br>
+					<label class="f_left">前置参数 ：</label>
+					<input type="text"  id='prepose_param' value="" class="f_left search_input"/><br><br><br>
+
+					<label class="f_left">批量执行 ：</label>
+					<div id="thpexe">
+					</div> <br><br><br>
+				</div>
+				</td>
+				</tr>
+				</table>
+			</div>
+		</div>
+		</form>
+		<!--javascript include-->
+		<script src="js/jquery-2.2.1.min.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
+		<script src="js/other.js"></script>
+		
+	</body>
+</html>
+		

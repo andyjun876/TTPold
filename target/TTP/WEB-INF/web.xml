@@ -41,5 +41,20 @@
     <servlet-name>GetDictionary</servlet-name>
     <url-pattern>/servlet/GetDictionary</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <servlet-name>TestCaseList</servlet-name>
+    <servlet-class>com.cn.api.TestCaseList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestCaseList</servlet-name>
+    <url-pattern>/servlet/TestCaseList</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>GetModule</servlet-name>
+    <servlet-class>com.cn.api.GetModule</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetModule</servlet-name>
+    <url-pattern>/servlet/GetModule</url-pattern>
+  </servlet-mapping>
 </web-app>
