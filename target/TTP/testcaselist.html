@@ -12,56 +12,88 @@
 		
 		<script type="text/javascript">
 	        $(function(){	
-			js_list();
+			js_list('0');
 		 	 });
 	    	
-	    function js_list(){
-	    	var status;
+	    function js_list(change){
+	    	status = '0';
+	    	pexe = '0';
+	    	huan = '0';
+	    	module = '0';
 	    	
+	    	if(change!='0'){
+		    	status=document.getElementById("statis").value;
+		    	pexe=document.getElementById("pexe").value;
+		    	huan=document.getElementById("huan").value;
+		    	module=document.getElementById("module").value;
+	    	}else if(GetUrlParam('back')==1){
+	    		status=GetUrlParam("status");
+		    	pexe=GetUrlParam("pexe");
+		    	huan=GetUrlParam("huan");
+		    	module=GetUrlParam("module");
+	    	}
 	    	$.ajax({
 	               type: "GET",
 	               url: "http://172.16.30.12:8080/TTP/servlet/TestCaseList",
 	               data: "uid=fasdfasdfasdf",
 	               dateType: "json",
 	               success: function(data){	
-	            	   	status = 1;
-	            	   	autoflag = 1;
-	            	   	
+      	   				
 	            	    var strhtml="";
 	           	   		var datajson = eval("(" + data + ")");  
 	           	   		if(datajson.msg!="failure"){	           	   		
 	               	   		var datadata = datajson.data;
 	               	   		for(i=0;i<datajson.data.length;i++){
 	               	   					preposeid = datadata[i].preposeid;
-	               	   					if(preposeid=="0"){
+	               	   					if(preposeid=='0'){
 	               	   						preposeid = "无";
 	               	   					}
-	    								strhtml = strhtml + "<tr id=" +datadata[i].id+ "><td>"+
-	    								datadata[i].id+ "</td><td>" +
-	    								datadata[i].module+"</td><td>"+
-	    								datadata[i].environment+"</td><td>"+
-	    								datadata[i].type+"</td><td>"+
-	    								datadata[i].ip+"</td><td>"+
-	    								preposeid +"</td><td>"+
-	    								datadata[i].parameter+"</td><td>"+
-	    								datadata[i].statusvalue+"</td><td>"+
-	    								datadata[i].autoflag+"</td><td>"+
-	    								"<a href='javascript:void(0);' onclick=\"update('"+datadata[i].id+"')\" class='table_btn table_edit edit_btn'><i class='fa fa-refresh'></i>"+
-	    								"<span> 更新</span></a>"+"</td></tr>";   
+	               	   					strval="<tr id=" +datadata[i].id+ "><td>"+
+			    								datadata[i].id+ "</td><td>" +
+			    								datadata[i].module+"</td><td>"+
+			    								datadata[i].environment+"</td><td>"+
+			    								datadata[i].type+"</td><td>"+
+			    								datadata[i].ip+"</td><td>"+
+			    								preposeid +"</td><td>"+
+			    								datadata[i].parameter+"</td><td>"+
+			    								datadata[i].statusvalue+"</td><td>"+
+			    								datadata[i].autoflag+"</td><td>"+
+			    								"<a href='javascript:void(0);' onclick=\"update('"+datadata[i].id+"')\" class='table_btn table_edit edit_btn'><i class='fa fa-refresh'></i>"+
+			    								"<span> 更新</span></a>"+"</td></tr>";
+			    								
+			    						if(status=='0'||status==datadata[i].status){
+			    							if(pexe=='0'||pexe==datadata[i].auto_flag){
+			    								if(huan=='0'||huan==datadata[i].environment_id){
+			    									if(module=='0'||module==datadata[i].module_id){
+			    										strhtml = strhtml + strval; 
+						    						}	
+					    						}
+				    						}
+			    						}
+
+	    								  
 	               	   		}
 	               	   		$("#thdiv").html(strhtml);
 	           	   		}
 
 	                  }
 	            	});
-	    	dict();
+	    	if(change=='0'){
+		    	dict();
+	    	}
+
 	    } 
 	    
 	    function update(id){
+	    		
+	    		
 				  if(id==0){
 					 url = "testcase.html";
 				  }else{
-					  url = "testcase.html" + "?id=" + id;
+					  url = "testcase.html" + "?id=" + id + "&status=" +document.getElementById("statis").value
+					  + "&huan=" + document.getElementById("huan").value
+					  + "&pexe=" + document.getElementById("pexe").value
+					  + "&module=" + document.getElementById("module").value;
 				
 				  }
 					window.location.href = url;
@@ -79,9 +111,12 @@
 	           	   		var datajson = eval("(" + data + ")");
 	           	   		var datadata = datajson.data;
 	           	   		var num = 0;
-	           	   		strstatis = "<select name='statis' id='statis' class='f_left search_input'> ";
-	           	   		strpexe = "<select name='pexe' id='pexe' class='f_left search_input'> ";
-	           	   		strhuan = "<select name='huan' id='huan' class='f_left search_input'> ";
+	           	   		strstatis = "<select name='statis' id='statis' class='f_left search_input' style='width:200px'  onchange='js_list(1)'> ";
+	           	   		strstatis = strstatis + "<option value='0'>全部</option>"
+	           	   		strpexe = "<select name='pexe' id='pexe' class='f_left search_input' style='width:200px'  onchange='js_list(1)'> ";
+	           	   		strpexe = strpexe + "<option value='0'>全部</option>"
+	           	   		strhuan = "<select name='huan' id='huan' class='f_left search_input' style='width:200px'  onchange='js_list(1)'> ";
+	           	   		strhuan = strhuan + "<option value='0'>全部</option>"
 	           	   		for(i=0;i<datajson.data.length;i++){
 	           	   			
 	           	   			if(datadata[i].dict_name=='auto_flag'){
@@ -90,9 +125,9 @@
 	           	   			}else if(datadata[i].dict_name=='status'){
 	           	   				num = num + 1;
 	           	   				strstatis = strstatis + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						
-	           	   			}else if(){
+	           	   			}else if(datadata[i].dict_name=='environment'){
 	           	   				num = num + 1;
-           	   					strstatis = strstatis + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						        	   				
+	           	   				strhuan = strhuan + "<option value='" + datadata[i].dict_value + "'>" + datadata[i].dictdata_value + "</option>"		           	   						        	   				
 	           	   			}
 	           	   			
 	           	   			
@@ -123,8 +158,8 @@
 	            success: function(data){	
 	        	   		var datajson = eval("(" + data + ")");
 	        	   		var datadata = datajson.data;
-	        	   		thmodule = "<select name='module' id='module' class='f_left search_input' style='width:200px' onchange='change()'> ";
-
+	        	   		thmodule = "<select name='module' id='module' class='f_left search_input' style='width:200px' onchange='js_list(1)'> ";
+	        	   		thmodule = thmodule + "<option value='0'>全部</option>"
 	        	   		for(i=0;i<datajson.data.length;i++){
 	        	   			thmodule = thmodule + "<option value='" + datadata[i].id + "'>" + datadata[i].module + "</option>"
 	        	   		}
@@ -133,6 +168,16 @@
 
 	        	   		//alert(document.getElementById("selectAge").value);
 	        	   		$("#thmodule").html(thmodule);
+	        	   		if(GetUrlParam('back')==1){
+	        	    		status=GetUrlParam("status");
+	        		    	pexe=GetUrlParam("pexe");
+	        		    	huan=GetUrlParam("huan");
+	        		    	module=GetUrlParam("module");
+	        		    	document.getElementById("statis").value=status;
+	        		    	document.getElementById("pexe").value=pexe;
+	        		    	document.getElementById("huan").value=huan;
+	        		    	document.getElementById("module").value=module;
+	        	    	}
 	               }
 	         	});			
 		}

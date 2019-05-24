@@ -49,12 +49,28 @@
     <servlet-name>TestCaseList</servlet-name>
     <url-pattern>/servlet/TestCaseList</url-pattern>
   </servlet-mapping>
-    <servlet>
+   <servlet>
     <servlet-name>GetModule</servlet-name>
     <servlet-class>com.cn.api.GetModule</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GetModule</servlet-name>
     <url-pattern>/servlet/GetModule</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TestAuto</servlet-name>
+    <servlet-class>com.cn.api.TestAuto</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestAuto</servlet-name>
+    <url-pattern>/servlet/TestAuto</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ApiExe</servlet-name>
+    <servlet-class>com.cn.api.ApiExe</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApiExe</servlet-name>
+    <url-pattern>/servlet/ApiExe</url-pattern>
   </servlet-mapping>
 </web-app>
